@@ -4,6 +4,7 @@
 #include "test_msg_mqtt.c"
 #include "test_msg_pipe_splitter.c"
 #include "test_msg_pipe.c"
+#include "test_msg_tcpip.c"
 
 
 int main()
@@ -67,6 +68,14 @@ int main()
     RUN_TEST(test_msg_pipe_should_set_in_output_transformer);
     RUN_TEST(test_msg_pipe_should_set_up_in_splitter);
     RUN_TEST(test_msg_pipe_should_set_up_out_splitter);
+
+//  MSG_TCPIP
+
+    RUN_TEST(test_msg_tcpip_create_tcpip_client);
+    RUN_TEST(test_msg_tcpip_client_connect);
+    RUN_TEST(test_msg_tcpip_client_outgoing_handler);
+    RUN_TEST(test_msg_tcpip_client_incoming_handler_no_message);
+    RUN_TEST(test_msg_tcpip_client_incoming_handler);
 
     return UNITY_END();
 }
