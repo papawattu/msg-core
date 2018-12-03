@@ -1,8 +1,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef __LINUX__
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif
 #include "msg_tcpip.h"
 #include "msg_utils.h"
 #include "logger.h"

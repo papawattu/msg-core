@@ -4,33 +4,28 @@
 #include "msg_mqtt.h"
 #include "msg_gcp_mqtt.h"
 
-char * dummyJwt(void) 
+char * msg_gcp_mqtt_dummyJwt(void) 
 {
     return NULL;
 }
 
-char * createJwt(char *txt) 
+char * msg_gcp_mqtt_createJwt(char *txt) 
 {
     return "1234";
 } 
 
-void dummy(void)
+void msg_gcp_mqtt_dummy(void)
 {
 
 }
 void test_msg_gcp_mqtt_createGcpClient(void)
 {
-    messagingClient_t msgClient;
-    gcp_ctx_t ctx;
-    ctx.host = "1.1.1.1";
-    msgClient.ctx = &ctx;
-    //msg_core_createMessagingClient(&msgClient);
 
     msg_mqtt_t mqtt = {
-        .init = &dummy,
-        .start = &dummy,
-        .publish = &dummy,
-        .subscribe = &dummy
+        .init = &msg_gcp_mqtt_dummy,
+        .start = &msg_gcp_mqtt_dummy,
+        .publish = &msg_gcp_mqtt_dummy,
+        .subscribe = &msg_gcp_mqtt_dummy
     };
 
     gcpSettings_t settings = {
@@ -38,7 +33,7 @@ void test_msg_gcp_mqtt_createGcpClient(void)
         .port = 8883,
         .clientId = "projects/phev-db3fa/locations/us-central1/registries/my-registry/devices/my-device",
         .device = "my-device",
-        .createJwt = createJwt,
+        .createJwt = msg_gcp_mqtt_createJwt,
         .mqtt = &mqtt,
         .projectId = "phev-db3fa",
         .eventTopic = "/devices/my-device/events",

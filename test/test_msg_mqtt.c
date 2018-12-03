@@ -69,6 +69,7 @@ void test_msg_mqtt_publish(void)
 
     message->data = malloc(4);
     message->length = 4;
+    message->topic = strdup(TOPIC);
 
     memcpy(message->data, &DATA, 4);
     message_t * out = malloc(sizeof(message_t));
