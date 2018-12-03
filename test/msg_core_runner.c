@@ -5,7 +5,7 @@
 #include "test_msg_pipe_splitter.c"
 #include "test_msg_pipe.c"
 #include "test_msg_tcpip.c"
-
+#include "test_msg_utils.c"
 
 int main()
 {
@@ -76,6 +76,13 @@ int main()
     RUN_TEST(test_msg_tcpip_client_outgoing_handler);
     RUN_TEST(test_msg_tcpip_client_incoming_handler_no_message);
     RUN_TEST(test_msg_tcpip_client_incoming_handler);
+
+// MSG_UTILS
+
+    RUN_TEST(test_msg_utils_create_msg);
+    RUN_TEST(test_msg_utils_copy_message);
+    RUN_TEST(test_msg_utils_destroy_message);
+    RUN_TEST(test_msg_utils_concat_messages);
 
     return UNITY_END();
 }

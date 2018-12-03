@@ -1,12 +1,8 @@
 #include "unity.h"
 #include "msg_utils.h"
-#include "mock_logger.h"
+#include "logger.h"
 
-void setUp(void)
-{
-    hexdump_Ignore();
-}
-void test_create_msg(void)
+void test_msg_utils_create_msg(void)
 {
     uint8_t data[] = {1,2,3,4};
     message_t * message = msg_utils_createMsg(data,4);
@@ -14,7 +10,7 @@ void test_create_msg(void)
     TEST_ASSERT_EQUAL(4, message->length);
     TEST_ASSERT_EQUAL_HEX8_ARRAY(data, message->data,4);
 }
-void test_copy_message(void)
+void test_msg_utils_copy_message(void)
 {
     uint8_t data[] = {1,2,3,4};
     message_t * message = msg_utils_createMsg(data,4);
@@ -25,7 +21,7 @@ void test_copy_message(void)
     TEST_ASSERT_EQUAL_HEX8_ARRAY(message->data, copied->data, 4);
 }
 
-void test_destroy_message(void)
+void test_msg_utils_destroy_message(void)
 {
     uint8_t data[] = {1,2,3,4};
     message_t * message = msg_utils_createMsg(data,4);
@@ -33,7 +29,7 @@ void test_destroy_message(void)
     msg_utils_destroyMsg(message);
 
 }
-void test_concat_messages(void)
+void test_msg_utils_concat_messages(void)
 {
     uint8_t data1[] = {1,2,3,4};
     message_t * message1 = msg_utils_createMsg(data1,4);
