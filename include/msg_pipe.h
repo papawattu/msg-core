@@ -15,6 +15,7 @@ typedef bool (*msg_pipe_filter_t)(void *ctx, message_t *);
 typedef message_t *(*msg_pipe_responder_t)(void *ctx, message_t *);
 typedef message_t *(*msg_pipe_aggregator_t)(void *ctx, messageBundle_t *);
 typedef message_t *(*msg_pipe_transformer_t)(void *ctx, message_t *);
+typedef void (* msg_pipe_connectHook_t)(msg_pipe_ctx_t * ctx);
 
 typedef struct msg_pipe_chain_t
 {
@@ -35,8 +36,8 @@ typedef struct msg_pipe_settings_t
     msg_pipe_chain_t *in_chain;
     msg_pipe_chain_t *out_chain;
 
-    void (* preInConnectHook)(msg_pipe_ctx_t * ctx);
-    void (* preOutConnectHook)(msg_pipe_ctx_t * ctx);
+    msg_pipe_connectHook_t preInConnectHook;
+    msg_pipe_connectHook_t preOutConnectHook;
 
     void *user_context;
 
@@ -53,8 +54,8 @@ typedef struct msg_pipe_ctx_t
     msg_pipe_chain_t *in_chain;
     msg_pipe_chain_t *out_chain;
 
-    void (* preInConnectHook)(msg_pipe_ctx_t * ctx);
-    void (* preOutConnectHook)(msg_pipe_ctx_t * ctx);
+    msg_pipe_connectHook_t preInConnectHook;
+    msg_pipe_connectHook_t preOutConnectHook;
 
     void *user_context;
 } msg_pipe_ctx_t;
@@ -62,8 +63,6 @@ typedef struct msg_pipe_ctx_t
 msg_pipe_ctx_t *msg_pipe(msg_pipe_settings_t);
 
 void msg_pipe_loop(msg_pipe_ctx_t *ctx);
-
-//message_t *msg_pipe_transformChain(msg_pipe_ctx_t *ctx, messagingClient_t *client, msg_pipe_chain_t *chain, message_t *message, bool respond);
 
 int msg_pipe_in_connect(msg_pipe_ctx_t * ctx);
 
