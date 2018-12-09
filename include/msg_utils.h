@@ -12,7 +12,7 @@
 
 const static char *MSG_UTILS_APP_TAG = "MSG_UTILS";
 
-inline static message_t * msg_utils_createMsg(uint8_t * data, size_t length)
+inline static message_t * msg_utils_createMsg(const uint8_t * data, const size_t length)
 {
     LOG_V(MSG_UTILS_APP_TAG,"START - createMsg");
     message_t * message = malloc(sizeof(message_t));
@@ -32,7 +32,7 @@ inline static message_t * msg_utils_createMsg(uint8_t * data, size_t length)
     
     return message;
 }
-inline static message_t * msg_utils_createMsgTopic(const char * topic, uint8_t * data, size_t length)
+inline static message_t * msg_utils_createMsgTopic(const char * topic, const uint8_t * data, const size_t length)
 {
     LOG_V(MSG_UTILS_APP_TAG,"START - createMsgTopic");
     message_t * message = msg_utils_createMsg(data,length);

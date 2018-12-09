@@ -5,13 +5,13 @@
 #include <ctype.h>
 #include "msg_core.h"
 
-#define LOGGING_OFF
+//#define LOGGING_OFF
 
 //void msgBundleDump(const char * tag, messageBundle_t * bundle);
 
 #ifndef __XTENSA__
 
-static void hexdump(const char * tag, unsigned char * buffer, int length, int level);
+static void hexdump(const char * tag, const unsigned char * buffer, const int length, const int level);
 
 #define LOG_DEBUG 0
 #ifndef LOGGING_OFF
@@ -44,7 +44,7 @@ static void nop() {}
 
 #endif
 
-static void hexdump(const char * tag, unsigned char * buffer, int length, int level)
+static void hexdump(const char * tag, const unsigned char * buffer, const int length, const int level)
 {
 #ifndef LOGGING_OFF
     if(length <= 0 || buffer == NULL) return;
