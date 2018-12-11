@@ -2,13 +2,13 @@ project("Message Core" C)
 cmake_minimum_required(VERSION 3.0)
 
 add_library(msg_core STATIC
-    msg_core/src/msg_core.c
-    msg_core/src/msg_gcp_mqtt.c
-    msg_core/src/msg_mqtt.c
-    msg_core/src/msg_pipe_splitter.c
-    msg_core/src/msg_pipe.c 
-    msg_core/src/msg_tcpip.c 
-    msg_core/src/msg_utils.c
+    src/msg_core.c
+    src/msg_gcp_mqtt.c
+    src/msg_mqtt.c
+    src/msg_pipe_splitter.c
+    src/msg_pipe.c 
+    src/msg_tcpip.c 
+    src/msg_utils.c
 )
 
 include(CTest)
