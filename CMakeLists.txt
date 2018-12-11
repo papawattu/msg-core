@@ -1,7 +1,6 @@
 project("Message Core" C)
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_C_FLAGS "std=c99")
 
 add_library(msg_core STATIC
     src/msg_core.c
@@ -20,3 +19,4 @@ add_subdirectory(external)
 add_subdirectory(test)
 
 target_include_directories(msg_core PUBLIC include)
+set_property(TARGET msg_core PROPERTY C_STANDARD 11)
