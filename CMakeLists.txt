@@ -1,5 +1,5 @@
 project("Message Core" C)
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 
 
 add_library(msg_core STATIC
