@@ -11,7 +11,6 @@ add_library(msg_core STATIC
     src/msg_tcpip.c 
     src/msg_utils.c
 )
-set_property(TARGET msg_core PROPERTY C_STANDARD 11)
 
 include(CTest)
 
@@ -20,4 +19,5 @@ add_subdirectory(external)
 add_subdirectory(test)
 
 target_include_directories(msg_core PUBLIC include)
+set_property(TARGET msg_core PROPERTY C_STANDARD 11)
 
