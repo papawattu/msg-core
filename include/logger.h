@@ -5,6 +5,13 @@
 #include <ctype.h>
 #include "msg_core.h"
 
+
+#define LOG_NONE 0
+#define LOG_DEBUG 4
+
+#ifndef LOG_LEVEL
+#define LOG_LEVEL LOG_NONE
+#endif
 //#define LOGGING_OFF
 
 //void msgBundleDump(const char * tag, messageBundle_t * bundle);
@@ -13,14 +20,13 @@
 
 static void hexdump(const char * tag, const unsigned char * buffer, const int length, const int level);
 
-#define LOG_DEBUG 0
-#ifndef LOGGING_OFF
+#if LOG_LEVEL != LOG_NONE
 #define LOG printf
 #else
 static void nop() {}
 #define LOG nop
 #endif
-#define LOG_I(TAG, FORMAT , ...) LOG ("INFO - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
+#define LOG_I(TAG, FORMAT , ...) LOG("INFO - %s: " FORMAT "\n", TAG, ##__VA_ARGS__) 
 #define LOG_V(TAG, FORMAT , ...) LOG ("VERBOSE - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_D(TAG, FORMAT , ...) LOG ("DEBUG - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_E(TAG, FORMAT , ...) LOG ("ERROR - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
