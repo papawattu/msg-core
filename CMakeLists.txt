@@ -13,6 +13,7 @@ add_library(msg_core STATIC
     src/msg_utils.c
 )
 
+option (LOG_LEVEL "Log level" 0)
 include(CTest)
 
 add_subdirectory(external) 

@@ -52,7 +52,7 @@ static void nop() {}
 
 static void hexdump(const char * tag, const unsigned char * buffer, const int length, const int level)
 {
-#ifndef LOGGING_OFF
+#if LOG_LEVEL != LOG_NONE
     if(length <= 0 || buffer == NULL) return;
 
     char out[17];
