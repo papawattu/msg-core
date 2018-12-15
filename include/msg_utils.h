@@ -42,7 +42,7 @@ inline static message_t * msg_utils_createMsgTopic(const char * topic, const uin
 }
 inline static void msg_utils_destroyMsg(message_t * message)
 {
-    LOG_V(MSG_UTILS_APP_TAG,"START - destroyMsg");
+    //LOG_V(MSG_UTILS_APP_TAG,"START - destroyMsg");
     
     if(message != NULL)
     {
@@ -56,7 +56,7 @@ inline static void msg_utils_destroyMsg(message_t * message)
         free(message);
         message = NULL;
     }
-    LOG_V(MSG_UTILS_APP_TAG,"END - destroyMsg");
+    //LOG_V(MSG_UTILS_APP_TAG,"END - destroyMsg");
     
 }
 inline static void msg_utils_destroyMsgBundle(messageBundle_t * messages) 

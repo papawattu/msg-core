@@ -202,6 +202,8 @@ void msg_pipe_outboundPublish(msg_pipe_ctx_t * ctx, message_t * message)
     }
     if(message != NULL) 
     {
+        LOG_D(APP_TAG,"Calling outbound client publish %p",outboundClient->publish);
+        LOG_BUFFER_HEXDUMP(APP_TAG,message->data,message->length,LOG_DEBUG);
         outboundClient->publish(outboundClient, message);
         LOG_D(APP_TAG,"Destroy message after outboundClient publish");
             

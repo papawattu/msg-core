@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include "msg_core.h"
 #include "msg_utils.h"
+#include "logger.h"
+
+const static char * TAG = "MSG_CORE";
 
 int msg_core_start(messagingClient_t *client)
 {
@@ -18,30 +21,47 @@ int msg_core_connect(messagingClient_t *client)
 }
 int msg_core_publish(messagingClient_t *client, message_t *message)
 {
+    LOG_V(TAG,"START - Publish");
     client->outgoingHandler(client, message);
+    LOG_V(TAG,"END - Publish");
+    
     return 0;
 }
 
 message_t * msg_core_incomingNop(messagingClient_t *client)
 {
+    LOG_V(TAG,"START - incomingNop");
+    LOG_V(TAG,"END - incomingNop");
+    
     return NULL;
 }
 void msg_core_outgoingNop(messagingClient_t *client, message_t *message)
 {
+    LOG_V(TAG,"START - outgoingNop");
+    LOG_V(TAG,"END - outgoingNop");
+    
     return;
 }
 int msg_core_registerHandlers(messagingClient_t *client, messagingClientHandler_t incoming, messagingClientHandler_t outgoing) 
 {
-    if(incoming) 
+    if(incoming != NULL) 
     {
+        LOG_D(TAG,"Setting incoming handler to %p",incoming);
+        
         client->incomingHandler = incoming;
     } else {
+        LOG_D(TAG,"Setting incoming handler to NOP %p",msg_core_incomingNop);
+        
         client->incomingHandler = msg_core_incomingNop;
     }
-    if(outgoing) 
+    if(outgoing != NULL) 
     {
+        LOG_D(TAG,"Setting ougoing handler to %p",outgoing);
+        
         client->outgoingHandler = outgoing;
     } else {
+        LOG_D(TAG,"Setting ougoing handler to NOP %p",msg_core_outgoingNop);
+        
         client->outgoingHandler = msg_core_outgoingNop;
     }
     return 0;
