@@ -281,15 +281,31 @@ int msg_pipe_in_connect(msg_pipe_ctx_t * ctx)
 {
     LOG_V(APP_TAG,"START - in connect");
     if(ctx->preInConnectHook != NULL) ctx->preInConnectHook(ctx);
+    int ret = ctx->in->connect(ctx->in);
+    if(ret > -1)
+    {
+        ctx->in->connected = 1;
+    } else {
+        ctx->in->connected = 0;
+    }
+
     LOG_V(APP_TAG,"END - in connect");
-    return ctx->in->connect(ctx->in);
+    return ret;
 }
 int msg_pipe_out_connect(msg_pipe_ctx_t * ctx)
 {
     LOG_V(APP_TAG,"START - out connect");
     if(ctx->preOutConnectHook != NULL) ctx->preOutConnectHook(ctx);
+    int ret = ctx->out->connect(ctx->out);
+    if(ret > -1)
+    {
+        ctx->out->connected = 1;
+    } else {
+        ctx->out->connected = 0;
+    }
+
     LOG_V(APP_TAG,"END - out connect");
-    return ctx->out->connect(ctx->out);
+    return ret;    
 }
 msg_pipe_ctx_t * msg_pipe(msg_pipe_settings_t settings) 
 {
