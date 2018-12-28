@@ -17,6 +17,7 @@ int msg_core_stop(messagingClient_t *client)
 }
 int msg_core_connect(messagingClient_t *client)
 {
+    client->connected = 1;
     return 0;
 }
 int msg_core_publish(messagingClient_t *client, message_t *message)
