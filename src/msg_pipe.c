@@ -309,6 +309,7 @@ int msg_pipe_out_connect(msg_pipe_ctx_t * ctx)
 }
 msg_pipe_ctx_t * msg_pipe(msg_pipe_settings_t settings) 
 {
+    LOG_V(APP_TAG,"START pipe");
     msg_pipe_ctx_t * ctx = malloc(sizeof(msg_pipe_ctx_t));
 
     ctx->in = settings.in;
@@ -328,12 +329,34 @@ msg_pipe_ctx_t * msg_pipe(msg_pipe_settings_t settings)
     ctx->in->subscribe(ctx->in, ctx, msg_pipe_inboundSubscription);
     ctx->out->subscribe(ctx->out, ctx, msg_pipe_outboundSubscription);
 
-    ctx->in->start(ctx->in);
     
+    if(ctx->in->start)
+    {
+        LOG_D(APP_TAG,"Calling input start");
+        ctx->in->start(ctx->in);
+    }
+    
+    LOG_D(APP_TAG,"Calling input connect");
+        
     msg_pipe_in_connect(ctx);
-    ctx->out->start(ctx->out);
+
     
-    if(!settings.lazyConnect) msg_pipe_out_connect(ctx);
+    if(ctx->out->start)
+    {
+        LOG_D(APP_TAG,"Calling output start");
+        ctx->out->start(ctx->out);
+    }
+    
+    if(!settings.lazyConnect) 
+    {
+        LOG_D(APP_TAG,"Calling output connect");
+        msg_pipe_out_connect(ctx);
+    } else {
+        LOG_D(APP_TAG,"Not connecting to output as lazy connected set");
+    }
+    
+    
+    LOG_V(APP_TAG,"END - pipe");
     
     return ctx;    
 }
