@@ -22,3 +22,13 @@ add_subdirectory(test)
 
 target_include_directories(msg_core PUBLIC include)
 
+install(TARGETS msg_core DESTINATION lib)
+install(FILES 
+	include/msg_core.h 
+	include/msg_gcp_mqtt.h
+	include/msg_mqtt.h
+	include/msg_pipe_splitter.h
+	include/msg_pipe.h
+	include/msg_tcpip.h
+	include/msg_utils.h
+	DESTINATION include)
