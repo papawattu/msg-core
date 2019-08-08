@@ -25,7 +25,6 @@ int msg_core_publish(messagingClient_t *client, message_t *message)
     LOG_V(TAG,"START - Publish");
     client->outgoingHandler(client, message);
     LOG_V(TAG,"END - Publish");
-    
     return 0;
 }
 

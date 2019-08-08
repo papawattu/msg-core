@@ -1,5 +1,5 @@
 project("Message Core" C)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.13)
 
 set (CMAKE_C_STANDARD 11)
 
@@ -11,6 +11,7 @@ add_library(msg_core STATIC
     src/msg_pipe.c 
     src/msg_tcpip.c 
     src/msg_utils.c
+	src/msg_mqtt_paho.c
 )
 
 option (LOG_LEVEL "Log level" 0)
@@ -20,6 +21,7 @@ add_subdirectory(external)
 
 add_subdirectory(test)
 
+#target_link_libraries(msg_core "${PAHO_LIB}")
 target_include_directories(msg_core PUBLIC include)
 
 install(TARGETS msg_core DESTINATION lib)
@@ -31,4 +33,5 @@ install(FILES
 	include/msg_pipe.h
 	include/msg_tcpip.h
 	include/msg_utils.h
+	include/msg_mqtt_paho.h
 	DESTINATION include)

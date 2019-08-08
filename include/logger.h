@@ -10,7 +10,7 @@
 #define LOG_DEBUG 4
 
 #ifndef LOG_LEVEL
-#define LOG_LEVEL LOG_NONE
+#define LOG_LEVEL LOG_DEBUG
 #endif
 //#define LOGGING_OFF
 
