@@ -1,7 +1,14 @@
 project("Message Core" C)
 cmake_minimum_required(VERSION 3.0)
 
+
+OPTION(BUILD_TEST "Build test files")
+OPTION(MQTT_PAHO "Enable Paho MQTT")
 set (CMAKE_C_STANDARD 11)
+
+IF(${MQTT_PAHO})
+	SET(MQTT_PAHO_SRC src/msg_mqtt_paho.c)
+ENDIF()
 
 add_library(msg_core STATIC
     src/msg_core.c
@@ -11,15 +18,16 @@ add_library(msg_core STATIC
     src/msg_pipe.c 
     src/msg_tcpip.c 
     src/msg_utils.c
-	src/msg_mqtt_paho.c
+	${MQTT_PAHO_SRC}
 )
 
-option (LOG_LEVEL "Log level" 0)
-include(CTest)
-
-add_subdirectory(external) 
-
-add_subdirectory(test)
+#add_subdirectory(external) 
+MESSAGE (${BUILD_TEST})
+IF(${BUILD_TEST})
+	find_library(UNITY unity)
+    include(CTest)
+	add_subdirectory(test)
+ENDIF()
 
 #target_link_libraries(msg_core "${PAHO_LIB}")
 target_include_directories(msg_core PUBLIC include)
