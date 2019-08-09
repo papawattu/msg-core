@@ -21,15 +21,12 @@ add_library(msg_core STATIC
 	${MQTT_PAHO_SRC}
 )
 
-#add_subdirectory(external) 
-MESSAGE (${BUILD_TEST})
 IF(${BUILD_TEST})
 	find_library(UNITY unity)
     include(CTest)
 	add_subdirectory(test)
 ENDIF()
 
-#target_link_libraries(msg_core "${PAHO_LIB}")
 target_include_directories(msg_core PUBLIC include)
 
 install(TARGETS msg_core DESTINATION lib)
