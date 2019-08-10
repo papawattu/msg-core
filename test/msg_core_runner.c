@@ -1,4 +1,5 @@
 #include "unity.h"
+
 #include "test_msg_core.c"
 #include "test_msg_gcp_mqtt.c"
 #include "test_msg_mqtt.c"
@@ -6,8 +7,17 @@
 #include "test_msg_pipe.c"
 #include "test_msg_tcpip.c"
 #include "test_msg_utils.c"
+#ifdef MQTT_PAHO
 #include "test_msg_mqtt_paho.c"
+#endif
 
+void setUp(void) {
+    // set stuff up here
+}
+
+void tearDown(void) {
+    // clean stuff up here
+}
 int main()
 {
     UNITY_BEGIN();
@@ -86,10 +96,11 @@ int main()
     RUN_TEST(test_msg_utils_concat_messages);
 
 // MSG_MQTT_PAHO
-
+#ifdef MQTT_PAHO
     RUN_TEST(test_msg_mqtt_paho_create_mqtt_paho_client_not_null);
     RUN_TEST(test_msg_mqtt_paho_create_mqtt_paho_client_paho_client_not_null);
     RUN_TEST(test_msg_mqtt_paho_connect);
     RUN_TEST(test_msg_mqtt_paho_publish);
+#endif
     return UNITY_END();
 }

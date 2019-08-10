@@ -1,11 +1,6 @@
 
-find_library(PAHO_LIB paho-mqtt3c-static)
-
-IF("${PAHO_LIB}")
-	MESSAGE("All good")
-ELSE()
-	MESSAGE("no PAHO_LIB")
-ENDIF()
+#find_library(PAHO_LIB paho-mqtt3c-static)
+find_package(unity)
 
 add_executable(test_msg_core
     msg_core_runner.c
@@ -13,8 +8,8 @@ add_executable(test_msg_core
 
 target_link_libraries(test_msg_core
     msg_core
-    Unity
-    paho-mqtt3c
+    unity
+    ${PAHO_LIB}
 )
 
 add_test(test_msg_core test_msg_core)
