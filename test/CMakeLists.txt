@@ -1,5 +1,6 @@
 
 find_library(PAHO_LIB paho-mqtt3c-static)
+find_library(UNITY_LIB Unity REQUIRED)
 
 IF("${PAHO_LIB}")
 	MESSAGE("All good")
@@ -13,8 +14,8 @@ add_executable(test_msg_core
 
 target_link_libraries(test_msg_core
     msg_core
-    Unity
-    paho-mqtt3c
+    ${UNITY_LIB}
+    ${PAHO_LIB}
 )
 
 add_test(test_msg_core test_msg_core)
