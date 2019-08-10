@@ -17,6 +17,8 @@ void test_msg_mqtt_paho_create_mqtt_paho_client_not_null(void)
         .clientId = "client",
         .username = "user",
         .password = "password",
+        .incomingTopic = NULL,
+        .outgoingTopic = NULL,
     };
 
     messagingClient_t * client = msg_mqtt_paho_createMqttPahoClient(settings);
@@ -31,6 +33,8 @@ void test_msg_mqtt_paho_create_mqtt_paho_client_paho_client_not_null(void)
         .clientId = "client",
         .username = "user",
         .password = "password",
+        .incomingTopic = NULL,
+        .outgoingTopic = NULL,
     };
 
     messagingClient_t * client = msg_mqtt_paho_createMqttPahoClient(settings);
@@ -45,6 +49,8 @@ void test_msg_mqtt_paho_connect(void)
         .clientId = "client",
         .username = "user",
         .password = "password",
+        .incomingTopic = NULL,
+        .outgoingTopic = NULL,
     };
 
     messagingClient_t * client = msg_mqtt_paho_createMqttPahoClient(settings);
@@ -61,6 +67,8 @@ void test_msg_mqtt_paho_publish(void)
         .clientId = "client",
         .username = "user",
         .password = "password",
+        .incomingTopic = NULL,
+        .outgoingTopic = NULL,
     };
 
     const static uint8_t TEST_DATA[] = "Hello";
