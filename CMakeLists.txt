@@ -31,7 +31,7 @@ target_include_directories(msg_core PUBLIC include)
 
 install(TARGETS msg_core DESTINATION lib)
 install(FILES 
-	inlcude/logger.h
+	include/logger.h
 	include/msg_core.h 
 	include/msg_gcp_mqtt.h
 	include/msg_mqtt.h
