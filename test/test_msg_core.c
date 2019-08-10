@@ -77,14 +77,6 @@ int mock_connect(messagingClient_t *client)
     return 0;
 } 
 
-/*                            */
-/*      START OF TESTS        */
-/*                            */
-void setUp(void)
-{
-
-}
-
 void test_msg_core_bootstrap(void)
 {
     
