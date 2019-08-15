@@ -9,7 +9,9 @@ set (CMAKE_C_STANDARD 11)
 
 IF(${MQTT_PAHO})
 	message("Building MQTT Paho support")
+	find_library(PAHO_LIB paho-mqtt3c-static REQUIRED)
 	SET(MQTT_PAHO_SRC src/msg_mqtt_paho.c)
+	SET(CMAKE_C_FLAGS "-DMQTT_PAHO")
 ENDIF()
 
 add_library(msg_core STATIC
