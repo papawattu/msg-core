@@ -7,7 +7,10 @@
 
 
 #define LOG_NONE 0
+
+#ifndef LOG_DEBUG
 #define LOG_DEBUG 4
+#endif
 
 #ifndef LOG_LEVEL
 #define LOG_LEVEL LOG_NONE
@@ -38,7 +41,9 @@ static void nop() {}
 #else
 #include "esp_log.h"
 
+#ifndef LOG_DEBUG
 #define LOG_DEBUG ESP_LOG_DEBUG
+#endif
 #define LOG_I(...) ESP_LOGI(__VA_ARGS__)
 #define LOG_V(...) ESP_LOGV(__VA_ARGS__)
 #define LOG_D(...) ESP_LOGD(__VA_ARGS__)

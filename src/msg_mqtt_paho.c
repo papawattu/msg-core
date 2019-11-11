@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef MQTT_PAHO
 #include "MQTTClient.h"
 #include "msg_mqtt_paho.h"
 #include "msg_core.h"
@@ -159,3 +160,4 @@ messagingClient_t * msg_mqtt_paho_createMqttPahoClient(mqttPahoSettings_t settin
     return client;
     
 }
+#endif
