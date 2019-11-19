@@ -47,23 +47,33 @@ int msg_tcpip_connect(messagingClient_t *client)
 message_t *msg_tcpip_incomingHandler(messagingClient_t *client)
 {
     //LOG_V(APP_TAG,"START - incomingHandler");
-    if (client->connected)
-    {
-        tcpip_ctx_t *ctx = (tcpip_ctx_t *)client->ctx;
-        int len = ctx->read(ctx->socket, ctx->readBuffer, TCPIP_CLIENT_READ_BUF_SIZE);
 
-        if (len > 0 && len < TCPIP_CLIENT_READ_BUF_SIZE)
+
+    if (!client->connected)
+    {
+        int ret = msg_tcpip_connect(client);
+        if(ret < 0) 
         {
-            LOG_D(APP_TAG,"Got message size %d",len);
-    
-            return msg_utils_createMsg(ctx->readBuffer,len);
-        } 
-        if(len < 0) {
-            LOG_E(APP_TAG,"Read returned error : %d",len);
-    
-            client->connected = 0;
+            LOG_E(APP_TAG,"Cannot connect");
+            return NULL;
         }
     }
+    tcpip_ctx_t *ctx = (tcpip_ctx_t *)client->ctx;
+    int len = ctx->read(ctx->socket, ctx->readBuffer, TCPIP_CLIENT_READ_BUF_SIZE);
+
+    if (len > 0 && len < TCPIP_CLIENT_READ_BUF_SIZE)
+    {
+        LOG_D(APP_TAG,"Got message size %d",len);
+    
+        return msg_utils_createMsg(ctx->readBuffer,len);
+    } 
+    if(len < 0) {
+        LOG_E(APP_TAG,"Read returned error : %d",len);
+    
+        client->connected = 0;
+    }
+    
+
     //LOG_V(APP_TAG,"END - incomingHandler");
     return NULL;
 }

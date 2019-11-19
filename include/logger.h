@@ -15,6 +15,8 @@
 #ifndef LOG_LEVEL
 #define LOG_LEVEL LOG_NONE
 #endif
+
+static void nop() {}
 //#define LOGGING_OFF
 
 //void msgBundleDump(const char * tag, messageBundle_t * bundle);
@@ -26,7 +28,6 @@ static void hexdump(const char * tag, const unsigned char * buffer, const int le
 #if LOG_LEVEL != LOG_NONE
 #define LOG printf
 #else
-static void nop() {}
 #define LOG nop
 #endif
 #define LOG_I(TAG, FORMAT , ...) LOG("INFO - %s: " FORMAT "\n", TAG, ##__VA_ARGS__) 
@@ -35,7 +36,7 @@ static void nop() {}
 #define LOG_E(TAG, FORMAT , ...) LOG ("ERROR - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_W(TAG, FORMAT , ...) LOG ("WARNING - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_BUFFER_HEXDUMP(TAG, BUFFER, LENGTH, LEVEL) hexdump(TAG, BUFFER, LENGTH,LEVEL)
-#define LOG_MSG_BUNDLE(TAG, BUNDLE) LOG_W(TAG, "Message bundle not Implemented")
+#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop()
 
 //#define LOG_MSG_BUNDLE(TAG, BUNDLE) msgBundleDump(TAG, BUNDLE)
 #else
@@ -44,6 +45,15 @@ static void nop() {}
 #ifndef LOG_DEBUG
 #define LOG_DEBUG ESP_LOG_DEBUG
 #endif
+#ifndef LOG_INFO
+#define LOG_INFO ESP_LOG_INFO
+#endif
+#ifndef LOG_WARNING
+#define LOG_WARNING ESP_LOG_WARNING
+#endif
+#ifndef LOG_ERROR
+#define LOG_ERROR ESP_LOG_ERROR
+#endif
 #define LOG_I(...) ESP_LOGI(__VA_ARGS__)
 #define LOG_V(...) ESP_LOGV(__VA_ARGS__)
 #define LOG_D(...) ESP_LOGD(__VA_ARGS__)
@@ -51,7 +61,7 @@ static void nop() {}
 #define LOG_W(...) ESP_LOGW(__VA_ARGS__)
 #define LOG_BUFFER_HEXDUMP(...) ESP_LOG_BUFFER_HEXDUMP(__VA_ARGS__)
 //#define LOG_MSG_BUNDLE(TAG, BUNDLE) msgBundleDump(TAG, BUNDLE)
-#define LOG_MSG_BUNDLE(TAG, BUNDLE) printf("Message bundle not Implemented\n")
+#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop()
 
 #endif
 
