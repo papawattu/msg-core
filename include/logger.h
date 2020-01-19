@@ -6,11 +6,12 @@
 #include "msg_core.h"
 
 
-#define LOG_NONE 0
-
-#ifndef LOG_DEBUG
-#define LOG_DEBUG 4
-#endif
+#define LOG_NONE    0
+#define LOG_ERROR   1      /*!< Critical errors, software module can not recover on its own */
+#define LOG_WARN    2       /*!< Error conditions from which recovery measures have been taken */
+#define LOG_INFO    3       /*!< Information messages which describe normal flow of events */
+#define LOG_DEBUG   4      /*!< Extra information which is not necessary for normal use (values, pointers, sizes, etc). */
+#define LOG_VERBOSE 5
 
 #ifndef LOG_LEVEL
 #define LOG_LEVEL LOG_NONE
@@ -62,7 +63,7 @@ static void hexdump(const char * tag, const unsigned char * buffer, const int le
 #define LOG_BUFFER_HEXDUMP(...) ESP_LOG_BUFFER_HEXDUMP(__VA_ARGS__)
 //#define LOG_MSG_BUNDLE(TAG, BUNDLE) msgBundleDump(TAG, BUNDLE)
 #define LOG_MSG_BUNDLE(TAG, BUNDLE) nop()
-
+#define LOG_BUFFER_HEX(...) ESP_LOG_BUFFER_HEX(__VA_ARGD__)
 #endif
 
 static void hexdump(const char * tag, const unsigned char * buffer, const int length, const int level)
