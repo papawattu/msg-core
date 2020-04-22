@@ -73,5 +73,7 @@ message_t * msg_pipe_callOutputTransformers(msg_pipe_ctx_t *ctx, message_t *mess
 
 void msg_pipe_outboundPublish(msg_pipe_ctx_t * ctx, message_t * message);
 void msg_pipe_inboundPublish(msg_pipe_ctx_t * ctx, message_t * message);
+void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, message_t * message);
+void msg_pipe_inboundSubscription(messagingClient_t *client, void * params, message_t * message);
 
 #endif
