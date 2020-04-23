@@ -240,8 +240,21 @@ void msg_pipe_inboundSubscription(messagingClient_t *client, void * params, mess
 {
     LOG_V(APP_TAG,"START - inboundSubscription");
     
-    messagingClient_t *outboundClient = ((msg_pipe_ctx_t *) params)->out;
+    //messagingClient_t *outboundClient = ((msg_pipe_ctx_t *) params)->out;
+    if(message == NULL)
+    {
+        LOG_D(APP_TAG,"Inbound message is NULL");
+        return;
+    }
+    if(message->length == 0) return;
+
     message_t * out = message;
+    if(!params)
+    {
+        LOG_E(APP_TAG,"No pipe passed in params");
+        return;
+    }
+    
     msg_pipe_ctx_t * pipe = (msg_pipe_ctx_t *) params;
     
     if(pipe->in_chain != NULL)
@@ -259,9 +272,19 @@ void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, mes
 {
     LOG_V(APP_TAG,"START - outboundSubscription");
     
-    if(message == NULL || message->length ==0) return;
+    if(message == NULL)
+    {
+        LOG_D(APP_TAG,"Outbound message is NULL");
+        return;
+    }
+    if(message->length == 0) return;
 
-    messagingClient_t *inboundClient = ((msg_pipe_ctx_t *) params)->in;
+    if(!params)
+    {
+        LOG_E(APP_TAG,"No pipe passed in params");
+        return;
+    }
+
     message_t * out = message;
     msg_pipe_ctx_t * pipe = (msg_pipe_ctx_t *) params;
     
@@ -325,8 +348,13 @@ msg_pipe_ctx_t * msg_pipe(msg_pipe_settings_t settings)
     ctx->preOutConnectHook = settings.preOutConnectHook;
     ctx->preInConnectHook = settings.preInConnectHook;
 
+    LOG_D(APP_TAG,"Calling inbound subscribe");
 
+    LOG_D(APP_TAG,"Addr of subscribe %p", ctx->in->subscribe);
     ctx->in->subscribe(ctx->in, ctx, msg_pipe_inboundSubscription);
+
+    LOG_D(APP_TAG,"Calling outbound subscribe");
+    
     ctx->out->subscribe(ctx->out, ctx, msg_pipe_outboundSubscription);
 
     
