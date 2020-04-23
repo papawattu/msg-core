@@ -23,6 +23,11 @@ inline static message_t * msg_utils_createMsg(const uint8_t * data, const size_t
     message->id = rand();
 #endif
     message->data = malloc(length);
+    if(!data)
+    {
+        LOG_E(MSG_UTILS_APP_TAG,"Cannot allocate memory Out of memory! Size requested %d",length);
+        return NULL;
+    }
     memcpy(message->data, data, length);
     message->length = length;
     message->topic = NULL;
