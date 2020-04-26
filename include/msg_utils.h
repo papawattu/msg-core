@@ -106,6 +106,8 @@ inline static message_t * msg_utils_copyMsg(message_t * message)
     
     message_t * out = msg_utils_createMsg(message->data,message->length);
     
+    out->topic = message->topic != NULL ? strdup(message->topic) : NULL;
+    out->ctx = message->ctx;
     LOG_D(MSG_UTILS_APP_TAG,"Copied message %ul to new message %ul",message->id,out->id);
     
     LOG_V(MSG_UTILS_APP_TAG,"END - copyMsg");
