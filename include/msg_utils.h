@@ -31,6 +31,7 @@ inline static message_t * msg_utils_createMsg(const uint8_t * data, const size_t
     memcpy(message->data, data, length);
     message->length = length;
     message->topic = NULL;
+    message->ctx = NULL;
     LOG_D(MSG_UTILS_APP_TAG,"Created Message ID %u length %d",message->id,message->length);
     LOG_BUFFER_HEXDUMP(MSG_UTILS_APP_TAG,message->data,message->length,LOG_DEBUG);
     LOG_V(MSG_UTILS_APP_TAG,"END - createMsg");
@@ -43,6 +44,23 @@ inline static message_t * msg_utils_createMsgTopic(const char * topic, const uin
     message_t * message = msg_utils_createMsg(data,length);
     message->topic = strdup(topic);
     LOG_V(MSG_UTILS_APP_TAG,"END - createMsgTopic");
+    return message;
+}
+inline static message_t * msg_utils_createMsgTopicCtx(const char * topic, const uint8_t * data, const size_t length, void * ctx)
+{
+    LOG_V(MSG_UTILS_APP_TAG,"START - createMsgTopicCtx");
+    message_t * message = msg_utils_createMsg(data,length);
+    message->topic = strdup(topic);
+    message->ctx = ctx;
+    LOG_V(MSG_UTILS_APP_TAG,"END - createMsgTopicCtx");
+    return message;
+}
+inline static message_t * msg_utils_createMsgCtx(const uint8_t * data, const size_t length, void * ctx)
+{
+    LOG_V(MSG_UTILS_APP_TAG,"START - createMsgCtx");
+    message_t * message = msg_utils_createMsg(data,length);
+    message->ctx = ctx;
+    LOG_V(MSG_UTILS_APP_TAG,"END - createMsgCtx");
     return message;
 }
 inline static void msg_utils_destroyMsg(message_t * message)

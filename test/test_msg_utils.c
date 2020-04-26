@@ -10,6 +10,36 @@ void test_msg_utils_create_msg(void)
     TEST_ASSERT_EQUAL(4, message->length);
     TEST_ASSERT_EQUAL_HEX8_ARRAY(data, message->data,4);
 }
+void test_msg_utils_create_msg_topic(void)
+{
+    uint8_t data[] = {1,2,3,4};
+    message_t * message = msg_utils_createMsgTopic("Topic",data,4);
+
+    TEST_ASSERT_EQUAL(4, message->length);
+    TEST_ASSERT_EQUAL_HEX8_ARRAY(data, message->data,4);
+    TEST_ASSERT_EQUAL_STRING("Topic",message->topic);
+}
+void test_msg_utils_create_msg_ctx(void)
+{
+    uint8_t data[] = {1,2,3,4};
+    uint8_t ctx = 45;
+    message_t * message = msg_utils_createMsgCtx(data,4,(void *) &ctx);
+
+    TEST_ASSERT_EQUAL(4, message->length);
+    TEST_ASSERT_EQUAL_HEX8_ARRAY(data, message->data,4);
+    TEST_ASSERT_EQUAL(&ctx,message->ctx);
+}
+void test_msg_utils_create_msg_topic_ctx(void)
+{
+    uint8_t data[] = {1,2,3,4};
+    uint8_t ctx = 77;
+    message_t * message = msg_utils_createMsgTopicCtx("Topic",data,4,(void *) &ctx);
+
+    TEST_ASSERT_EQUAL(4, message->length);
+    TEST_ASSERT_EQUAL_HEX8_ARRAY(data, message->data,4);
+    TEST_ASSERT_EQUAL_STRING("Topic",message->topic);
+    TEST_ASSERT_EQUAL(&ctx, message->ctx);
+}
 void test_msg_utils_copy_message(void)
 {
     uint8_t data[] = {1,2,3,4};

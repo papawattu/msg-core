@@ -16,6 +16,7 @@ typedef struct message_t {
     char * topic;
     data_t * data;
     size_t length;
+    void * ctx;
 }  message_t;
 
 typedef struct messageBundle_t {
