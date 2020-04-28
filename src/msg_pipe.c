@@ -123,7 +123,7 @@ message_t * msg_pipe_callTransformers(msg_pipe_ctx_t *ctx, messagingClient_t * c
          
         LOG_D(APP_TAG,"Destroy messages (messages) after transform loop");
         
-        //msg_utils_destroyMsgBundle(messages);
+        msg_utils_destroyMsgBundle(messages);
                 
         LOG_D(APP_TAG,"Transform Loop finished - processed %d messages", out->numMessages);
         
