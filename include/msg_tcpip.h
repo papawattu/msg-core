@@ -10,6 +10,7 @@ typedef struct tcpIpSettings_t {
     char * host;
     uint16_t port;
     int (* connect)(const char*, uint16_t);
+    int (* disconnect)(int);
     int (* read)(int,uint8_t*,size_t);
     int (* write)(int,uint8_t*,size_t);
 } tcpIpSettings_t;
@@ -19,6 +20,7 @@ typedef struct tcpip_ctx_t {
     int socket;
     uint8_t * readBuffer;
     int (* connect)(const char*, uint16_t);
+    int (* disconnect)(int);
     int (* read)(int,uint8_t*,size_t);
     int (* write)(int,uint8_t*,size_t);
 } tcpip_ctx_t;
@@ -28,5 +30,6 @@ messagingClient_t * msg_tcpip_createTcpIpClient(tcpIpSettings_t);
 int msg_tcpip_start(messagingClient_t *client);
 int msg_tcpip_stop(messagingClient_t *client);
 int msg_tcpip_connect(messagingClient_t *client);
+int msg_tcpip_disconnect(messagingClient_t *client);
 
 #endif

@@ -33,6 +33,7 @@ typedef struct messagingSettings_t {
     int (* start)(messagingClient_t *client);
     int (* stop)(messagingClient_t *client);
     int (* connect)(messagingClient_t *client);
+    int (* disconnect)(messagingClient_t *client);
     message_t * (* incomingHandler)(messagingClient_t *client);
     void (* outgoingHandler)(messagingClient_t *client, message_t *message);
 } messagingSettings_t;
@@ -44,6 +45,7 @@ struct messagingClient_t {
     int (* start)(messagingClient_t *client);
     int (* stop)(messagingClient_t *client);
     int (* connect)(messagingClient_t *client);
+    int (* disconnect)(messagingClient_t *client);
     void (* loop)(messagingClient_t *client);
     messagingClient_t * (* incomingHandler)(messagingClient_t *client);
     void (* outgoingHandler)(messagingClient_t *client, message_t *message);

@@ -19,6 +19,17 @@ int msg_tcpip_stop(messagingClient_t *client)
 {
     return 0;
 }
+int msg_tcpip_disconnect(messagingClient_t *client)
+{
+    LOG_V(APP_TAG,"START - disconnect");
+    tcpip_ctx_t * ctx = (tcpip_ctx_t *) client->ctx;
+    
+    ctx->disconnect(ctx->socket);
+
+    client->connected = 0;
+    LOG_V(APP_TAG,"END - disconnect");
+    return 0;
+}
 int msg_tcpip_connect(messagingClient_t *client)
 {
     LOG_V(APP_TAG,"START - connect");
@@ -108,6 +119,7 @@ messagingClient_t *msg_tcpip_createTcpIpClient(tcpIpSettings_t settings)
     ctx->read = settings.read;
     ctx->write = settings.write;
     ctx->connect = settings.connect;
+    ctx->disconnect = settings.disconnect;
 
     ctx->host = settings.host;
     ctx->port = settings.port;
@@ -120,6 +132,7 @@ messagingClient_t *msg_tcpip_createTcpIpClient(tcpIpSettings_t settings)
     clientSettings.start = msg_tcpip_start;
     clientSettings.stop = msg_tcpip_stop;
     clientSettings.connect = msg_tcpip_connect;
+    clientSettings.disconnect = msg_tcpip_disconnect;
 
     clientSettings.ctx = (void *)ctx;
 

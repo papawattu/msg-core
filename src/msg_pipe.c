@@ -303,12 +303,24 @@ void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, mes
 int msg_pipe_in_connect(msg_pipe_ctx_t * ctx)
 {
     LOG_V(APP_TAG,"START - in connect");
-    if(ctx->preInConnectHook != NULL) ctx->preInConnectHook(ctx);
-    int ret = ctx->in->connect(ctx->in);
-    if(ret > -1)
+
+    ctx->in->connected = 1;
+
+    if(ctx->preInConnectHook != NULL)
     {
-        ctx->in->connected = 1;
-    } else {
+        LOG_V(APP_TAG,"Calling in pre connection hook");
+        
+        ctx->preInConnectHook(ctx);
+    }
+     
+
+    if(ctx->in->connect == NULL) return 0;
+    
+    LOG_V(APP_TAG,"Calling in connect %p", ctx->in->connect);
+
+    int ret = ctx->in->connect(ctx->in);
+    if(ret < 0)
+    {
         ctx->in->connected = 0;
     }
 
@@ -318,15 +330,24 @@ int msg_pipe_in_connect(msg_pipe_ctx_t * ctx)
 int msg_pipe_out_connect(msg_pipe_ctx_t * ctx)
 {
     LOG_V(APP_TAG,"START - out connect");
-    if(ctx->preOutConnectHook != NULL) ctx->preOutConnectHook(ctx);
-    int ret = ctx->out->connect(ctx->out);
-    if(ret > -1)
+    if(ctx->preOutConnectHook != NULL) 
     {
-        ctx->out->connected = 1;
-    } else {
-        ctx->out->connected = 0;
+        LOG_V(APP_TAG,"Calling out pre connection hook");
+        ctx->preOutConnectHook(ctx);
     }
+    
+    ctx->out->connected = 1;
 
+    if(ctx->out->connect == NULL) return 0;
+    
+    LOG_V(APP_TAG,"Calling out connect %p", ctx->out->connect);
+
+    int ret = ctx->out->connect(ctx->out);
+    
+    if(ret < 0)
+    {
+        ctx->out->connected = 0;
+    } 
     LOG_V(APP_TAG,"END - out connect");
     return ret;    
 }
