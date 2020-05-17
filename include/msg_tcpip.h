@@ -3,7 +3,7 @@
 
 #include "msg_core.h"
 
-#define TCPIP_CLIENT_READ_BUF_SIZE 2048
+#define TCPIP_CLIENT_READ_BUF_SIZE 1024
 //#define OK 0
 
 typedef struct tcpIpSettings_t {
