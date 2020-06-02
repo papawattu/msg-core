@@ -79,6 +79,7 @@ void msg_core_call_subs(messagingClient_t *client, message_t *message)
             }
         }
     }
+    msg_utils_destroyMsg(message);
 }
 void msg_core_loop(messagingClient_t *client) 
 {

@@ -139,11 +139,13 @@ message_t * msg_pipe_callTransformers(msg_pipe_ctx_t *ctx, messagingClient_t * c
         {
             LOG_D(APP_TAG,"Custom aggregator");
             ret = chain->aggregator(ctx->user_context,out);     
+            msg_utils_destroyMsgBundle(out);
             
         } else {
             LOG_D(APP_TAG,"Default aggregator");
         
             ret = msg_pipe_splitter_aggregrator(out);
+            msg_utils_destroyMsgBundle(out);
         }
         LOG_BUFFER_HEXDUMP(APP_TAG,ret->data,ret->length,LOG_DEBUG);
         
@@ -296,6 +298,10 @@ void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, mes
     {
         msg_pipe_inboundPublish(pipe, out);
     }
+
+    msg_utils_destroyMsg(message);
+    msg_utils_destroyMsg(out);
+    
     LOG_V(APP_TAG,"END - outboundSubscription");
     
 }
