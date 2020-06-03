@@ -72,7 +72,6 @@ messageBundle_t * msg_pipe_splitter(msg_pipe_ctx_t *ctx, msg_pipe_chain_t * chai
     
     messageBundle_t * out = chain->splitter(ctx, message);
     
-    //msg_utils_destroyMsg(message);
     LOG_V(APP_TAG,"END - splitter");
     return out;  
 }

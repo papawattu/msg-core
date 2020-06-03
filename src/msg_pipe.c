@@ -31,7 +31,7 @@ message_t * msg_pipe_transformChain(msg_pipe_ctx_t * ctx, messagingClient_t * cl
 
     if(chain->inputTransformer != NULL) 
     {
-        msg = chain->inputTransformer(ctx->user_context, message);
+        msg = chain->inputTransformer(ctx->user_context, msg_utils_copyMsg(message));
         if(msg == NULL)
         {
             LOG_D(APP_TAG,"Not a valid input message");
@@ -86,7 +86,14 @@ message_t * msg_pipe_callTransformers(msg_pipe_ctx_t *ctx, messagingClient_t * c
     {
         messages = msg_pipe_splitter(ctx->user_context, chain, message);
  
-        if(messages == NULL || messages->numMessages == 0) return NULL;
+        if(messages == NULL) return NULL;
+        
+        
+        if(messages->numMessages == 0) 
+        {
+            free(messages);
+            return NULL;
+        }
 
         out = malloc(sizeof(messageBundle_t));
         
@@ -114,16 +121,20 @@ message_t * msg_pipe_callTransformers(msg_pipe_ctx_t *ctx, messagingClient_t * c
                 } else {
                     LOG_D(APP_TAG,"NULL returned from transform chain");
                 }
+                msg_utils_destroyMsg(messages->messages[i]);
+                
             } else {
                 LOG_E(APP_TAG, "Not expected message %d to be NULL, numMessages is %d",i,messages->numMessages);
                 return NULL;
             }
+
         } 
         
          
-        LOG_D(APP_TAG,"Destroy messages (messages) after transform loop");
+        //LOG_D(APP_TAG,"Destroy messages (messages) after transform loop");
         
-        msg_utils_destroyMsgBundle(messages);
+        //msg_utils_destroyMsgBundle(messages);
+        free(messages);
                 
         LOG_D(APP_TAG,"Transform Loop finished - processed %d messages", out->numMessages);
         
@@ -151,10 +162,9 @@ message_t * msg_pipe_callTransformers(msg_pipe_ctx_t *ctx, messagingClient_t * c
         
         LOG_D(APP_TAG,"Destroy messages (out) after transformChain 1");
         
-        msg_utils_destroyMsgBundle(out);
-    
         LOG_V(APP_TAG,"END - callTransformers -1");
-        
+
+
         return ret;
     }  else {
         
@@ -299,8 +309,7 @@ void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, mes
         msg_pipe_inboundPublish(pipe, out);
     }
 
-    msg_utils_destroyMsg(message);
-    msg_utils_destroyMsg(out);
+    //msg_utils_destroyMsg(message);
     
     LOG_V(APP_TAG,"END - outboundSubscription");
     
