@@ -20,6 +20,11 @@ int msg_core_connect(messagingClient_t *client)
     client->connected = 1;
     return 0;
 }
+int msg_core_disconnect(messagingClient_t *client)
+{
+    client->connected = 0;
+    return 0;
+}
 int msg_core_publish(messagingClient_t *client, message_t *message)
 {
     LOG_V(TAG,"START - Publish");
@@ -102,6 +107,7 @@ int msg_core_messagingClientInit(messagingClient_t **client)
     (*client)->start = msg_core_start;
     (*client)->stop = msg_core_stop;
     (*client)->connect = msg_core_connect;
+    (*client)->disconnect = msg_core_disconnect;
     (*client)->loop = msg_core_loop;
     (*client)->subscribe = msg_core_subscribe;
     (*client)->publish = msg_core_publish;
@@ -119,6 +125,7 @@ messagingClient_t * msg_core_createMessagingClient(messagingSettings_t settings)
     if(settings.start) client->start = settings.start;
     if(settings.stop) client->stop = settings.stop;
     if(settings.connect) client->connect = settings.connect;
+    if(settings.disconnect) client->disconnect = settings.disconnect;
     
     client->connected = 0;
     
