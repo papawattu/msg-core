@@ -342,6 +342,22 @@ int msg_pipe_in_connect(msg_pipe_ctx_t * ctx)
     LOG_V(APP_TAG,"END - in connect");
     return ret;
 }
+int msg_pipe_in_disconnect(msg_pipe_ctx_t * ctx)
+{
+    LOG_V(APP_TAG,"START - in disconnect");
+    
+    ctx->in->disconnect(ctx->in);
+
+    LOG_V(APP_TAG,"END - in disconnect");
+}
+int msg_pipe_out_disconnect(msg_pipe_ctx_t * ctx)
+{
+    LOG_V(APP_TAG,"START - out disconnect");
+    
+    ctx->out->disconnect(ctx->out);
+
+    LOG_V(APP_TAG,"END - out disconnect");
+}
 int msg_pipe_out_connect(msg_pipe_ctx_t * ctx)
 {
     LOG_V(APP_TAG,"START - out connect");

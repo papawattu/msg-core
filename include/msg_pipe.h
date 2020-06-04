@@ -63,14 +63,12 @@ typedef struct msg_pipe_ctx_t
 msg_pipe_ctx_t *msg_pipe(msg_pipe_settings_t);
 
 void msg_pipe_loop(msg_pipe_ctx_t *ctx);
-
 int msg_pipe_in_connect(msg_pipe_ctx_t * ctx);
-
 int msg_pipe_out_connect(msg_pipe_ctx_t * ctx);
-
+int msg_pipe_in_disconnect(msg_pipe_ctx_t * ctx);
+int msg_pipe_out_disconnect(msg_pipe_ctx_t * ctx);
 message_t * msg_pipe_transformChain(msg_pipe_ctx_t * ctx, messagingClient_t * client, msg_pipe_chain_t * chain, message_t * message,bool respond);
 message_t * msg_pipe_callOutputTransformers(msg_pipe_ctx_t *ctx, message_t *message);
-
 void msg_pipe_outboundPublish(msg_pipe_ctx_t * ctx, message_t * message);
 void msg_pipe_inboundPublish(msg_pipe_ctx_t * ctx, message_t * message);
 void msg_pipe_outboundSubscription(messagingClient_t *client, void * params, message_t * message);
