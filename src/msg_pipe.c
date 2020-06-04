@@ -348,6 +348,8 @@ int msg_pipe_in_disconnect(msg_pipe_ctx_t * ctx)
     
     int ret = ctx->in->disconnect(ctx->in);
 
+    ctx->in->connected = 0;
+
     LOG_V(APP_TAG,"END - in disconnect");
 
     return ret;
@@ -357,6 +359,8 @@ int msg_pipe_out_disconnect(msg_pipe_ctx_t * ctx)
     LOG_V(APP_TAG,"START - out disconnect");
     
     int ret = ctx->out->disconnect(ctx->out);
+
+    ctx->out->connected = 0;
 
     LOG_V(APP_TAG,"END - out disconnect");
 
