@@ -27,6 +27,7 @@ int msg_tcpip_disconnect(messagingClient_t *client)
     ctx->disconnect(ctx->socket);
 
     client->connected = 0;
+    ctx->socket = -1;
     LOG_V(APP_TAG,"END - disconnect");
     return 0;
 }
