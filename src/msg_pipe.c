@@ -31,7 +31,7 @@ message_t * msg_pipe_transformChain(msg_pipe_ctx_t * ctx, messagingClient_t * cl
 
     if(chain->inputTransformer != NULL) 
     {
-        msg = chain->inputTransformer(ctx->user_context, msg_utils_copyMsg(message));
+        msg = chain->inputTransformer(ctx->user_context, message);
         if(msg == NULL)
         {
             LOG_D(APP_TAG,"Not a valid input message");
