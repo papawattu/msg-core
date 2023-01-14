@@ -16,8 +16,7 @@
 #ifndef LOG_LEVEL
 #define LOG_LEVEL LOG_NONE
 #endif
-
-static void nop() {}
+static void nop(char * tag, ...) {}
 
 #ifndef __XTENSA__
 
@@ -34,7 +33,7 @@ static void hexdump(const char * tag, const unsigned char * buffer, const int le
 #define LOG_E(TAG, FORMAT , ...) LOG ("ERROR - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_W(TAG, FORMAT , ...) LOG ("WARNING - %s: " FORMAT "\n", TAG, ##__VA_ARGS__)
 #define LOG_BUFFER_HEXDUMP(TAG, BUFFER, LENGTH, LEVEL) hexdump(TAG, BUFFER, LENGTH,LEVEL)
-#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop()
+#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop
 
 #else
 #include "esp_log.h"
@@ -57,7 +56,7 @@ static void hexdump(const char * tag, const unsigned char * buffer, const int le
 #define LOG_E(...) ESP_LOGE(__VA_ARGS__)
 #define LOG_W(...) ESP_LOGW(__VA_ARGS__)
 #define LOG_BUFFER_HEXDUMP(...) ESP_LOG_BUFFER_HEXDUMP(__VA_ARGS__)
-#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop()
+#define LOG_MSG_BUNDLE(TAG, BUNDLE) nop
 #define LOG_BUFFER_HEX(...) ESP_LOG_BUFFER_HEX(__VA_ARGD__)
 #endif
 

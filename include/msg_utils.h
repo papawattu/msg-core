@@ -25,17 +25,16 @@ inline static message_t * msg_utils_createMsg(const uint8_t * data, const size_t
     message->data = malloc(length);
     if(!data)
     {
-        LOG_E(MSG_UTILS_APP_TAG,"Cannot allocate memory Out of memory! Size requested %d",length);
+        LOG_E(MSG_UTILS_APP_TAG,"Cannot allocate memory Out of memory! Size requested %zu", length);
         return NULL;
     }
     memcpy(message->data, data, length);
     message->length = length;
     message->topic = NULL;
     message->ctx = NULL;
-    LOG_D(MSG_UTILS_APP_TAG,"Created Message ID %u length %d",message->id,message->length);
+    LOG_D(MSG_UTILS_APP_TAG,"Created Message ID %u length %zu", message->id, message->length);
     LOG_BUFFER_HEXDUMP(MSG_UTILS_APP_TAG,message->data,message->length,LOG_DEBUG);
     LOG_V(MSG_UTILS_APP_TAG,"END - createMsg");
-    
     return message;
 }
 inline static message_t * msg_utils_createMsgTopic(const char * topic, const uint8_t * data, const size_t length)
@@ -67,8 +66,7 @@ inline static void msg_utils_destroyMsg(message_t * message)
 {
     if(message != NULL)
     {
-        LOG_D(MSG_UTILS_APP_TAG,"Destroyed Message ID %ul length %d",message->id,message->length);
-    
+        LOG_D(MSG_UTILS_APP_TAG,"Destroyed Message ID %ul length %zu", message->id, message->length);
         if(message->data != NULL)
         {
             free(message->data);
