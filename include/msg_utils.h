@@ -25,17 +25,16 @@ inline static message_t * msg_utils_createMsg(const uint8_t * data, const size_t
     message->data = malloc(length);
     if(!data)
     {
-        LOG_E(MSG_UTILS_APP_TAG,"Cannot allocate memory Out of memory! Size requested %d",length);
+        LOG_E(MSG_UTILS_APP_TAG,"Cannot allocate memory Out of memory! Size requested %zu", length);
         return NULL;
     }
     memcpy(message->data, data, length);
     message->length = length;
     message->topic = NULL;
     message->ctx = NULL;
-    LOG_D(MSG_UTILS_APP_TAG,"Created Message ID %u length %d",message->id,message->length);
+    LOG_D(MSG_UTILS_APP_TAG,"Created Message ID %u length %zu", message->id, message->length);
     LOG_BUFFER_HEXDUMP(MSG_UTILS_APP_TAG,message->data,message->length,LOG_DEBUG);
     LOG_V(MSG_UTILS_APP_TAG,"END - createMsg");
-    
     return message;
 }
 inline static message_t * msg_utils_createMsgTopic(const char * topic, const uint8_t * data, const size_t length)
@@ -65,12 +64,9 @@ inline static message_t * msg_utils_createMsgCtx(const uint8_t * data, const siz
 }
 inline static void msg_utils_destroyMsg(message_t * message)
 {
-    //LOG_V(MSG_UTILS_APP_TAG,"START - destroyMsg");
-    
     if(message != NULL)
     {
-        LOG_D(MSG_UTILS_APP_TAG,"Destroyed Message ID %ul length %d",message->id,message->length);
-    
+        LOG_D(MSG_UTILS_APP_TAG,"Destroyed Message ID %ul length %zu", message->id, message->length);
         if(message->data != NULL)
         {
             free(message->data);
@@ -79,15 +75,11 @@ inline static void msg_utils_destroyMsg(message_t * message)
         free(message);
         message = NULL;
     }
-    //LOG_V(MSG_UTILS_APP_TAG,"END - destroyMsg");
-    
 }
 inline static void msg_utils_destroyMsgBundle(messageBundle_t * messages) 
 {
     LOG_V(MSG_UTILS_APP_TAG,"START - destroyMsgBundle");
-    
     if(messages == NULL) return;
-    
     for(int i=0;i<messages->numMessages;i++)
     {
         if(messages->messages[i] != NULL)
@@ -98,20 +90,15 @@ inline static void msg_utils_destroyMsgBundle(messageBundle_t * messages)
     free(messages);
     messages = NULL;
     LOG_V(MSG_UTILS_APP_TAG,"END - destroyMsgBundle");
-    
 }
 inline static message_t * msg_utils_copyMsg(message_t * message)
 {
     LOG_V(MSG_UTILS_APP_TAG,"START - copyMsg");
-    
     message_t * out = msg_utils_createMsg(message->data,message->length);
-    
     out->topic = message->topic != NULL ? strdup(message->topic) : NULL;
     out->ctx = message->ctx;
     LOG_D(MSG_UTILS_APP_TAG,"Copied message %ul to new message %ul",message->id,out->id);
-    
     LOG_V(MSG_UTILS_APP_TAG,"END - copyMsg");
-    
     return out;
 }
 
